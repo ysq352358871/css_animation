@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title></title>
+	<style>
+		div.taiji{
+			position: relative;
+			width: 96px;height: 48px;
+			border:1px solid #000;
+			border-radius: 50%;
+			border-bottom: 50px solid #000;
+			animation: move 5s linear infinite normal
+		}
+		div.taiji:after{
+			content: "";
+			width: 10px;
+			height: 10px;
+			left:0;top: 51%;
+			position: absolute;
+			background-color: #fff;
+			border: 19px solid #000;
+			border-radius: 50%;
+		}
+		div.taiji:before{
+			content: "";
+			width: 10px;
+			height: 10px;
+			right:0;top: 51%;
+			position: absolute;
+			background-color: #000;
+			border: 19px solid #fff;
+			border-radius: 50%;
+		}
+		@keyframes move{
+			0%{
+				transform: rotate(0deg);
+			}
+			100%{
+				transform: rotate(360deg);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="taiji">
+		
+	</div>
+</body>
+</html>
