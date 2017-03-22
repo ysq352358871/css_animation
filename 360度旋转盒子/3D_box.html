@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .stage{
+            width: 150px;
+            height: 150px;
+            margin: auto;
+            position: absolute;
+            left: 0;top:0;bottom: 0;right:0;
+        }
+        .box{
+            width: 150px;height: 150px;
+            position: relative;
+            transform-style:preserve-3d;
+            /*perspective:600px;*/
+            transform-origin: center center 75px;
+            /*transition: transform 2s linear;*/
+            margin: auto;
+        }
+        .box div{
+            position: absolute;
+            left: 0;top: 0;
+            height: 150px;width: 150px;
+            text-align: center;
+            line-height: 150px;
+        }
+        .box div:nth-child(1){
+            background-color: red;
+            transform-origin:top;
+            transform: rotateX(90deg);
+        }
+        .box div:nth-child(2){
+            background-color: blue;
+            transform-origin:left;
+            transform: rotateY(-90deg);
+        }
+        .box div:nth-child(3){
+            background-color: yellow;
+            transform-origin:right;
+            transform: rotateY(90deg);
+        }
+        .box div:nth-child(4){
+            background-color: #008000;
+            transform-origin:bottom;
+            transform: rotateX(-90deg);
+        }
+        .box div:nth-child(5){/*底部的面*/
+             background-color: #00FFFF;
+            transform-origin:left;
+            transform: rotateX(180deg);
+         }
+        .box div:nth-child(6){/*顶部的面*/
+            background-color:#783e18;
+            transform: translateZ(150px);
+        }
+        .stage:hover .box{
+            transform: rotateY(180deg);
+        }
+    </style>
+    <script>
+        window.onload=function () {
+            var box=document.querySelector(".box");
+            var w=document.documentElement.clientWidth;
+            var h=document.documentElement.clientHeight;
+            document.onmousedown=function (e) {
+                var cw=e.clientX; //鼠标点击时,当前点到浏览器的距离。
+                var ch=e.clientY;
+                document.onmousemove=function (e) {
+                   var movew=e.clientX; //鼠标移动时，算出点到浏览器的距离
+                   var moveh=e.clientY;
+                    var x=movew-w/2;    //算出正方体旋转的轴。轴时刻都在变化。
+                    var y=moveh-h/2;
+                    box.style.transform="rotate3d("+(-y)+","+x+",0,"+Math.sqrt((movew-cw)*(movew-cw)+(moveh-ch)*(moveh-ch))+"deg)";
+                }
+                document.onmouseup=function () {
+                    document.onmousemove=null; //鼠标抬起时，清楚事件。
+                    document.onmouseup=null;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="stage">
+        <div class="box">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+        </div>
+    </div>
+</body>
+</html>
