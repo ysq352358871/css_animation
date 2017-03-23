@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>wheel</title>
+    <style>
+        /*
+        *   width:700px;height:455px;
+        */
+        *{
+            box-sizing: border-box;
+        }
+        .bigbox{
+            width:770px;height: 455px;
+            margin: auto;
+            position: fixed;
+            left:0;right: 0;top:0;bottom: 0;
+            border: 1px solid red;
+        }
+
+    </style>
+    <script>
+        window.onload=function () {
+            var num=10;
+            var arr=[];
+            var bigbox=document.querySelector(".bigbox");
+            window.onblur=function () {
+                clearInterval(t);
+            }
+            window.onfocus=function () {
+                t=setInterval(move,5000);
+            }
+            for(var i=0;i<num;i++){
+                var widths=770;
+                var heights=455;
+                var stage=document.createElement("div");
+                stage.style.cssText="width:"+widths+"px;height:"+heights/num+"px;position:relative;transform-style:preserve-3d;perspective:1000;";
+                var box=document.createElement("div");
+                box.style.cssText="width:100%;height:100%;position: absolute;left:0;top:0;transform-style:preserve-3d;transition:transform 2s linear "+0.3*i+"s;transform-origin:center center "+widths/2+"px";
+                //创建面
+                for (var j=0;j<6;j++){
+                    var plane=document.createElement("div");
+                    plane.style.cssText="position: absolute;left:0;top:0;";
+                    if(j==0){
+                    //顶部的面
+                        plane.style.width=widths+"px";
+                        plane.style.height=widths+"px";
+                        plane.style.transformOrigin="top";
+                        plane.style.transform="rotateX(90deg)";
+                        plane.style.background="#000";
+                    }else if(j==1){
+                    //底部的面
+                        plane.style.width=widths+"px";
+                        plane.style.height=widths+"px";
+                        plane.style.bottom=0;
+                        plane.style.transformOrigin="bottom";
+                        plane.style.transform="rotateX(-90deg)";
+//                        plane.style.background="#000";
+                    }else if(j==2){
+                    //左边的面
+                        plane.style.width="100%";
+                        plane.style.height="100%";
+                        plane.style.transformOrigin="left";
+                        plane.style.transform="rotateY(-90deg)";
+                        plane.style.backgroundImage="url('1.jpg')";
+                        plane.style.backgroundPositionX=0;
+                        plane.style.backgroundPositionY=(-heights/num)*i+"px";
+                    }else if(j==3){
+                    //后面的那个面
+                        plane.style.width="100%";
+                        plane.style.height="100%";
+                        plane.style.backgroundImage="url('2.jpg')";
+                        plane.style.backfaceVisibility="visible";
+                        plane.style.transform="rotateY(180deg)";
+                        plane.style.backgroundPositionX=0;
+                        plane.style.backgroundPositionY=-(heights/num)*i+"px";
+                    }else if(j==4){
+                        //前面那个面
+                        plane.style.width="100%";
+                        plane.style.height="100%";
+                        plane.style.backgroundImage="url('3.jpg')";
+                        plane.style.transform="translateZ("+widths+"px)";
+                        plane.style.backgroundPositionX=0;
+                        plane.style.backgroundPositionY=-(heights/num)*i+"px";
+                    }else if(j==5){
+                        //右边的面
+                        plane.style.width="100%";
+                        plane.style.height="100%";
+                        plane.style.transformOrigin="right";
+                        plane.style.transform="rotateY(90deg)";
+                        plane.style.backgroundImage="url('4.jpg')";
+                        plane.style.backgroundPositionX=0;
+                        plane.style.backgroundPositionY=-(heights/num)*i+"px";
+                    }
+                    box.appendChild(plane);
+                }
+                arr.push(box);
+                stage.appendChild(box);
+                bigbox.appendChild(stage);
+            }
+            var angle=0;
+            var speed=90;
+            var t=setInterval(move,5000)
+            function move() {
+                angle+=speed;
+                for(var i=0;i<arr.length;i++){
+                    arr[i].style.transform="rotateY("+angle+"deg)";
+                }
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <div class="bigbox"></div>
+</body>
+</html>
